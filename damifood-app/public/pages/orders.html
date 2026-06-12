@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="kk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Тапсырыстар тарихы - DamiFood</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="appHeader"></div>
+  <main class="container dashboard">
+    <div class="section-head"><div><h2>Тапсырыстар тарихы</h2><p>Бұрынғы тапсырыстар, статустар және қайта рәсімдеу.</p></div></div>
+    <div id="orders" class="list"></div>
+  </main>
+  <div class="toast-wrap"></div>
+  <script src="/app.js"></script>
+  <script>
+    async function reorder(order) {
+      for (const item of order.items) await Dami.api("/api/cart", { method: "POST", body: { foodId: item.foodId } });
+      location.href = "/pages/cart.html";
+    }
+    async function cancelOrder(id) {
+      const reason = prompt("Тапсырысты жою себебін жазыңыз:");
+      if (!reason) return Dami.toast("Жою себебі міндетті", true);
+      await Dami.api("/api/orders/" + id, { method: "PATCH", body: { cancelReason: reason } });
+      location.reload();
+    }
+    (async () => {
+      await Dami.bootstrap();
+      if (!await Dami.requireUser()) return;
+      const data = await Dami.api("/api/orders");
+      orders.innerHTML = data.orders.map(o => `<div class="item">
+        <div class="row"><h3>#${o.id}</h3><span class="tag ok">${o.status}</span></div>
+        <p>${o.items.map(i => Dami.food(i.foodId)?.name + " x" + i.qty).join(", ")}</p>
+        <div class="row"><span>${new Date(o.createdAt).toLocaleString()} · ${o.address}</span><b>${Dami.money(o.total)}</b></div>
+        ${o.cancelReason ? `<p class="tag danger">Жою себебі: ${o.cancelReason}. ${o.refunded ? "Қаражат қайтарылды." : ""}</p>` : ""}
+        <div class="row"><button onclick='reorder(${JSON.stringify(o)})'>Қайта рәсімдеу</button><button class="danger" onclick="cancelOrder(${o.id})">Жою</button></div>
+      </div>`).join("") || `<div class="empty">Тапсырыстар жоқ</div>`;
+    })();
+  </script>
+</body>
+</html>

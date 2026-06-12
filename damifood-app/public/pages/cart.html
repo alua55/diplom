@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="kk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Себет - DamiFood</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="appHeader"></div>
+  <main class="container dashboard">
+    <div class="layout">
+      <section class="card card-pad stack">
+        <h2>Себет</h2>
+        <div id="cartList" class="list"></div>
+      </section>
+      <aside class="card card-pad stack">
+        <h3>Тапсырысты рәсімдеу</h3>
+        <label>Мекенжай<select id="addressSelect"></select></label>
+        <label>Ескертпе<textarea id="note" placeholder="Подъезд, қабат, домофон"></textarea></label>
+        <div class="notice" id="summary"></div>
+        <button class="accent" id="payBtn">Kaspi арқылы төлеу</button>
+        <button id="orderBtn" disabled>Тапсырысты жіберу</button>
+      </aside>
+    </div>
+  </main>
+  <div class="toast-wrap"></div>
+  <script src="/app.js"></script>
+  <script>
+    let paid = false, cart = [];
+    function total() {
+      return cart.reduce((s, i) => s + Dami.food(i.foodId).price * i.qty, 0) + 650 + cart.length * 280;
+    }
+    async function drawCart() {
+      const data = await Dami.api("/api/cart");
+      cart = data.items;
+      cartList.innerHTML = cart.map(i => {
+        const f = Dami.food(i.foodId);
+        return `<div class="item row"><div><b>${f.name}</b><br><span class="muted">${Dami.restaurant(f.restaurantId).name}</span></div><div class="row"><button class="secondary" onclick="qty(${i.foodId},${i.qty - 1})">−</button><b>${i.qty}</b><button class="secondary" onclick="qty(${i.foodId},${i.qty + 1})">+</button><span class="price">${Dami.money(f.price * i.qty)}</span></div></div>`;
+      }).join("") || `<div class="empty">Себет бос</div>`;
+      summary.innerHTML = `Жеткізу: ${Dami.money(650 + cart.length * 280)}<br><b>Жалпы: ${Dami.money(total())}</b><br>Төлем: ${paid ? "расталды" : "күтілуде"}`;
+      orderBtn.disabled = !paid || !cart.length;
+    }
+    async function qty(foodId, qty) {
+      await Dami.api("/api/cart", { method: "PATCH", body: { foodId, qty } });
+      paid = false;
+      drawCart();
+    }
+    window.qty = qty;
+    (async () => {
+      await Dami.bootstrap();
+      if (!await Dami.requireUser()) return;
+      addressSelect.innerHTML = Dami.state.user.addresses.map(a => `<option value='${JSON.stringify(a)}'>${a.address}</option>`).join("") || `<option value="">Мекенжайды енгізіңіз</option>`;
+      await drawCart();
+      payBtn.onclick = () => { paid = true; Dami.toast("Kaspi төлемі расталды"); drawCart(); };
+      orderBtn.onclick = async () => {
+        try {
+          const a = addressSelect.value ? JSON.parse(addressSelect.value) : null;
+          if (!a) throw new Error("Мекенжайды енгізіңіз");
+          const res = await Dami.api("/api/orders", { method: "POST", body: { address: a.address, coords: a.coords, note: note.value, paymentProvider: "kaspi", paymentStatus: "paid" } });
+          location.href = "/pages/tracking.html?order=" + res.order.id;
+        } catch (e) { Dami.toast(e.message, true); }
+      };
+    })();
+  </script>
+</body>
+</html>

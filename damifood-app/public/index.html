@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="kk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DamiFood - заманауи тағам жеткізу</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="appHeader"></div>
+  <section class="hero">
+    <div class="container">
+      <h1>Қаладағы сүйікті тағамдар бір платформада</h1>
+      <p>Kaspi төлемі, нақты тапсырыс статустары, курьер картасы, клиент, курьер, мейрамхана және әкімші кабинеттері бар толыққанды food delivery веб-қосымша.</p>
+      <div class="hero-panel">
+        <a href="#catalog"><button>Тапсырыс беру</button></a>
+        <a href="/pages/tracking.html"><button class="secondary">Картадан бақылау</button></a>
+        <span class="tag ok">UTF-8 · Қазақша/Русский</span>
+      </div>
+    </div>
+  </section>
+  <main class="band" id="catalog">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>Мәзір</h2>
+          <p>Атауы, бағасы, санаты, рейтингі және жеткізу уақыты бойынша іздеу мен сүзу.</p>
+        </div>
+      </div>
+      <div class="filters">
+        <select id="category"></select>
+        <select id="sort">
+          <option value="rating">Рейтинг жоғары</option>
+          <option value="price">Баға төмен</option>
+          <option value="time">Жеткізу жылдам</option>
+        </select>
+        <input id="maxPrice" type="number" placeholder="Макс. баға">
+        <a href="/pages/cart.html"><button class="accent">Себетке өту</button></a>
+      </div>
+      <div class="food-grid" id="foodGrid"></div>
+    </div>
+  </main>
+  <div class="toast-wrap"></div>
+  <script src="/app.js"></script>
+  <script>renderHome();</script>
+</body>
+</html>

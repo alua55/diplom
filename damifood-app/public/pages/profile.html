@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="kk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Профиль - DamiFood</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="appHeader"></div>
+  <main class="container dashboard">
+    <div class="layout">
+      <section class="card card-pad stack">
+        <h2>Профиль</h2>
+        <form class="form" id="profileForm">
+          <label>Аты-жөні<input name="name" id="name"></label>
+          <label>Телефон<input name="phone" id="phone"></label>
+          <label>E-mail<input id="email" disabled></label>
+          <button>Сақтау</button>
+        </form>
+      </section>
+      <aside class="card card-pad stack">
+        <h3>Жеткізу мекенжайлары</h3>
+        <div id="addressList" class="list"></div>
+        <form class="form" id="addressForm">
+          <label>Атауы<input name="title" placeholder="Үй, кеңсе"></label>
+          <label>Мекенжай<input name="address" id="addressInput" placeholder="Картадан немесе қолмен таңдаңыз" required></label>
+          <input type="hidden" name="coords" id="coordsInput">
+          <button>Мекенжай қосу</button>
+        </form>
+      </aside>
+    </div>
+    <section class="band">
+      <h2>Картадан мекенжай таңдау</h2>
+      <p>Нақты Яндекс Карта API key қойылса, карта интерактивті режимде жұмыс істейді.</p>
+      <div id="addressMap" class="map"><div class="map-fallback">Yandex Maps API key қажет. server.js ішіндегі settings.yandexApiKey мәнін ауыстырыңыз.</div></div>
+    </section>
+  </main>
+  <div class="toast-wrap"></div>
+  <script src="/app.js"></script>
+  <script src="/maps.js"></script>
+  <script>
+    (async () => {
+      await Dami.bootstrap();
+      if (!await Dami.requireUser()) return;
+      name.value = Dami.state.user.name;
+      phone.value = Dami.state.user.phone;
+      email.value = Dami.state.user.email;
+      addressList.innerHTML = Dami.state.user.addresses.map(a => `<div class="item"><b>${a.title}</b><br>${a.address}</div>`).join("") || `<div class="empty">Мекенжай жоқ</div>`;
+      profileForm.onsubmit = async e => {
+        e.preventDefault();
+        await Dami.api("/api/profile", { method: "PUT", body: Object.fromEntries(new FormData(profileForm)) });
+        Dami.toast("Профиль сақталды");
+      };
+      addressForm.onsubmit = async e => {
+        e.preventDefault();
+        const fd = Object.fromEntries(new FormData(addressForm));
+        fd.coords = coordsInput.value ? JSON.parse(coordsInput.value) : undefined;
+        await Dami.api("/api/profile/address", { method: "POST", body: fd });
+        location.reload();
+      };
+      initAddressMap("addressMap", coords => coordsInput.value = JSON.stringify(coords), text => addressInput.value = text);
+    })();
+  </script>
+</body>
+</html>

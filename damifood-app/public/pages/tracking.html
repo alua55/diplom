@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="kk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Карта және бақылау - DamiFood</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="appHeader"></div>
+  <main class="container dashboard">
+    <div class="layout">
+      <section class="stack">
+        <h2>Тапсырысты нақты уақытта бақылау</h2>
+        <div id="trackMap" class="map"><div class="map-fallback">Yandex Maps API key қажет. Key қойылғанда курьер қозғалысы картада көрсетіледі.</div></div>
+      </section>
+      <aside class="card card-pad stack">
+        <h3>Ағымдағы тапсырыс</h3>
+        <div id="orderInfo" class="list"></div>
+        <button id="nextStatus">Келесі статус</button>
+        <button class="secondary" id="notifyBtn">Push + e-mail хабарлама</button>
+      </aside>
+    </div>
+  </main>
+  <div class="toast-wrap"></div>
+  <script src="/app.js"></script>
+  <script src="/maps.js"></script>
+  <script>
+    const statuses = ["қабылданды", "дайындалуда", "курьер алды", "жеткізілді"];
+    let currentOrder;
+    async function loadOrder() {
+      const data = await Dami.api("/api/orders");
+      const id = Number(new URLSearchParams(location.search).get("order"));
+      currentOrder = data.orders.find(o => o.id === id) || data.orders[0];
+      orderInfo.innerHTML = currentOrder ? `<div class="item"><b>#${currentOrder.id}</b><p>${currentOrder.address}</p><span class="tag ok">${currentOrder.status}</span><p>${currentOrder.items.map(i => Dami.food(i.foodId)?.name).join(", ")}</p></div>` : `<div class="empty">Тапсырыс жоқ</div>`;
+      if (currentOrder) initTrackingMap("trackMap", currentOrder);
+    }
+    (async () => {
+      await Dami.bootstrap();
+      if (!await Dami.requireUser()) return;
+      await loadOrder();
+      nextStatus.onclick = async () => {
+        if (!currentOrder) return;
+        const i = statuses.indexOf(currentOrder.status);
+        const status = statuses[Math.min(i + 1, statuses.length - 1)];
+        await Dami.api("/api/orders/" + currentOrder.id, { method: "PATCH", body: { status, courierCoords: [currentOrder.courierCoords[0] + .004, currentOrder.courierCoords[1] - .002] } });
+        Dami.toast("Статус жаңартылды және хабарлама жіберілді");
+        await loadOrder();
+      };
+      notifyBtn.onclick = () => Dami.toast("Push және e-mail хабарлама жіберілді");
+    })();
+  </script>
+</body>
+</html>

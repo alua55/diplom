@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="kk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Тіркелу - DamiFood</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="appHeader"></div>
+  <main class="container">
+    <section class="card form-card">
+      <div class="stack">
+        <h2>Тіркелу</h2>
+        <p>E-mail немесе телефон растауы демо режимде автоматты түрде орындалады.</p>
+        <form class="form" id="registerForm">
+          <label>Аты-жөні<input name="name" required></label>
+          <label>E-mail<input name="email" type="email" required></label>
+          <label>Телефон<input name="phone" required></label>
+          <label>Құпия сөз<input name="password" type="password" minlength="6" required></label>
+          <button>Аккаунт ашу</button>
+        </form>
+      </div>
+    </section>
+  </main>
+  <div class="toast-wrap"></div>
+  <script src="/app.js"></script>
+  <script>
+    bootstrap();
+    registerForm.onsubmit = async e => {
+      e.preventDefault();
+      try {
+        await Dami.api("/api/auth/register", { method: "POST", body: Object.fromEntries(new FormData(registerForm)) });
+        location.href = "/pages/profile.html";
+      } catch (err) { Dami.toast(err.message, true); }
+    };
+  </script>
+</body>
+</html>

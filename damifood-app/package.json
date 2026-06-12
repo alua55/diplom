@@ -1,0 +1,9 @@
+{
+  "name": "damifood-app",
+  "version": "2.0.0",
+  "private": true,
+  "description": "DamiFood multi-page food delivery app with local backend",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

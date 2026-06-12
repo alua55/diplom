@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="kk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Қолдау - DamiFood</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="appHeader"></div>
+  <main class="container dashboard">
+    <div class="layout">
+      <section class="card card-pad stack">
+        <h2>FAQ</h2>
+        <details class="item"><summary><b>Төлем расталмаса не болады?</b></summary><p>Тапсырыс мейрамханаға жіберілмейді.</p></details>
+        <details class="item"><summary><b>Жабық мейрамханадан тапсырыс қабылдана ма?</b></summary><p>Жоқ, жұмыс уақыты backend арқылы тексеріледі.</p></details>
+        <details class="item"><summary><b>Құпия сөз қалай қорғалады?</b></summary><p>Құпия сөз PBKDF2 hashing арқылы сақталады.</p></details>
+      </section>
+      <aside class="card card-pad stack">
+        <h3>Шағым немесе ұсыныс</h3>
+        <form class="form" id="complaintForm">
+          <label>Мейрамхана<select name="restaurantId" id="restaurants"></select></label>
+          <label>Мәтін<textarea name="text" required></textarea></label>
+          <button>Жіберу</button>
+        </form>
+      </aside>
+    </div>
+  </main>
+  <div class="toast-wrap"></div>
+  <script src="/app.js"></script>
+  <script>
+    (async () => {
+      await Dami.bootstrap();
+      restaurants.innerHTML = Dami.state.restaurants.map(r => `<option value="${r.id}">${r.name}</option>`).join("");
+      complaintForm.onsubmit = async e => {
+        e.preventDefault();
+        if (!await Dami.requireUser()) return;
+        const fd = Object.fromEntries(new FormData(complaintForm));
+        fd.restaurantId = Number(fd.restaurantId);
+        await Dami.api("/api/complaints", { method: "POST", body: fd });
+        Dami.toast("Шағым сақталды");
+        complaintForm.reset();
+      };
+    })();
+  </script>
+</body>
+</html>

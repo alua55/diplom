@@ -1,0 +1,503 @@
+{
+  "sessions": {
+    "2d9cebc57dc478b3701c1d0fea700c09c5346d1879706023": 1,
+    "cd0e3ed1f13afaf007d6ad577111de257e1617cb867f7cb8": 1
+  },
+  "settings": {
+    "yandexApiKey": "YOUR_YANDEX_MAPS_API_KEY"
+  },
+  "users": [
+    {
+      "id": 1,
+      "role": "admin",
+      "name": "Admin",
+      "email": "admin@dami.kz",
+      "phone": "+77010000001",
+      "password": "a90487a9b215092472336a28:2738585ebeb03b024516c65dbd0549cf20996d05571b5001b1e3e064e9ccc938",
+      "verified": true,
+      "lockedUntil": 0,
+      "failed": 0,
+      "addresses": [
+        {
+          "id": 1,
+          "title": "Кеңсе",
+          "address": "Астана, Мәңгілік Ел 10",
+          "coords": [
+            71.4304,
+            51.1282
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "role": "courier",
+      "name": "Courier",
+      "email": "courier@dami.kz",
+      "phone": "+77010000002",
+      "password": "078fb791b2062d17a91c48d7:1208aaa2f214dca30d52ade3cee8d4f134bd98b58b10cf8504d8f8f7d02ba398",
+      "verified": true,
+      "lockedUntil": 0,
+      "failed": 0,
+      "addresses": []
+    },
+    {
+      "id": 3,
+      "role": "owner",
+      "name": "Restaurant Owner",
+      "email": "owner@dami.kz",
+      "phone": "+77010000003",
+      "password": "7fac8e347d4c543c71c573c7:bd8564c06a42b9724da517a6b8f837873909d68ef1673b146b5f9626f39055ba",
+      "verified": true,
+      "lockedUntil": 0,
+      "failed": 0,
+      "addresses": []
+    },
+    {
+      "id": 4,
+      "role": "client",
+      "name": "алуа",
+      "email": "alua@gmail.com",
+      "phone": "87007000101",
+      "password": "281255da7081dece6b6ad92d:6cfcb00437fb99e14196d75d144ee2d05ca678a8fc294b781f6aa4a22bd811fa",
+      "verified": true,
+      "failed": 0,
+      "lockedUntil": 0,
+      "addresses": [
+        {
+          "id": 1781234255378,
+          "title": "Мекенжай",
+          "address": "алматы",
+          "coords": [
+            71.4304,
+            51.1282
+          ]
+        }
+      ]
+    }
+  ],
+  "restaurants": [
+    {
+      "id": 1,
+      "ownerId": 3,
+      "name": "Qazan House",
+      "category": "Ұлттық тағам",
+      "rating": 4.8,
+      "open": "09:00",
+      "close": "23:00",
+      "coords": [
+        71.4379,
+        51.1321
+      ],
+      "cover": "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "id": 2,
+      "ownerId": 3,
+      "name": "Sushi Steppe",
+      "category": "Суши",
+      "rating": 4.7,
+      "open": "10:00",
+      "close": "22:00",
+      "coords": [
+        71.4217,
+        51.1264
+      ],
+      "cover": "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "id": 3,
+      "ownerId": 3,
+      "name": "Burger Line",
+      "category": "Фастфуд",
+      "rating": 4.5,
+      "open": "08:00",
+      "close": "20:30",
+      "coords": [
+        71.4491,
+        51.1188
+      ],
+      "cover": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=80"
+    }
+  ],
+  "foods": [
+    {
+      "id": 1,
+      "restaurantId": 1,
+      "name": "Бешбармақ сеті",
+      "category": "Ұлттық",
+      "price": 4198,
+      "rating": 4.9,
+      "time": 35,
+      "available": true,
+      "image": "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80"
+    },
+    {
+      "id": 2,
+      "restaurantId": 1,
+      "name": "Қуырдақ",
+      "category": "Ұлттық",
+      "price": 3100,
+      "rating": 4.7,
+      "time": 30,
+      "available": true,
+      "image": "https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=900&q=80"
+    },
+    {
+      "id": 3,
+      "restaurantId": 2,
+      "name": "Филадельфия ролл",
+      "category": "Суши",
+      "price": 2800,
+      "rating": 4.6,
+      "time": 28,
+      "available": true,
+      "image": "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=900&q=80"
+    },
+    {
+      "id": 4,
+      "restaurantId": 2,
+      "name": "Темпура сет",
+      "category": "Суши",
+      "price": 5200,
+      "rating": 4.8,
+      "time": 38,
+      "available": true,
+      "image": "https://images.unsplash.com/photo-1611143669185-af224c5e3252?auto=format&fit=crop&w=900&q=80"
+    },
+    {
+      "id": 5,
+      "restaurantId": 3,
+      "name": "Double Burger",
+      "category": "Бургер",
+      "price": 2400,
+      "rating": 4.5,
+      "time": 22,
+      "available": true,
+      "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80"
+    },
+    {
+      "id": 6,
+      "restaurantId": 3,
+      "name": "Chicken Pizza",
+      "category": "Пицца",
+      "price": 3600,
+      "rating": 4.4,
+      "time": 32,
+      "available": true,
+      "image": "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=900&q=80"
+    }
+  ],
+  "carts": {
+    "1": [],
+    "2": [
+      {
+        "foodId": 6,
+        "qty": 1
+      }
+    ],
+    "3": [
+      {
+        "foodId": 5,
+        "qty": 1
+      }
+    ],
+    "4": []
+  },
+  "favorites": {
+    "1": [
+      5
+    ]
+  },
+  "orders": [
+    {
+      "id": 1781234263661,
+      "userId": 4,
+      "courierId": null,
+      "items": [
+        {
+          "foodId": 5,
+          "qty": 2
+        }
+      ],
+      "address": "алматы",
+      "coords": [
+        71.4304,
+        51.1282
+      ],
+      "note": "",
+      "phone": "87007000101",
+      "status": "жеткізілді",
+      "paid": true,
+      "provider": "Kaspi",
+      "total": 5730,
+      "createdAt": "2026-06-12T03:17:43.661Z",
+      "courierCoords": [
+        71.4379,
+        51.1321
+      ],
+      "cancelReason": null,
+      "refunded": false
+    },
+    {
+      "id": 1781233862151,
+      "userId": 1,
+      "courierId": 2,
+      "items": [
+        {
+          "foodId": 6,
+          "qty": 2
+        }
+      ],
+      "address": "Астана, Мәңгілік Ел 10",
+      "coords": [
+        71.4304,
+        51.1282
+      ],
+      "note": "",
+      "phone": "+77010000001",
+      "status": "жеткізілді",
+      "paid": true,
+      "provider": "Kaspi",
+      "total": 8130,
+      "createdAt": "2026-06-12T03:11:02.152Z",
+      "courierCoords": [
+        71.4379,
+        51.1321
+      ],
+      "cancelReason": null,
+      "refunded": false
+    }
+  ],
+  "reviews": [
+    {
+      "id": 1,
+      "restaurantId": 1,
+      "userName": "Айдана",
+      "rating": 5,
+      "text": "Тапсырыс жылы келді, порциясы жақсы."
+    },
+    {
+      "id": 2,
+      "restaurantId": 2,
+      "userName": "Мирас",
+      "rating": 5,
+      "text": "Ролл сапасы тұрақты, жеткізу жылдам."
+    }
+  ],
+  "complaints": [
+    {
+      "id": 1781233907926,
+      "userId": 1,
+      "restaurantId": 1,
+      "text": "прнтнгоь",
+      "at": "2026-06-12T03:11:47.926Z"
+    }
+  ],
+  "logs": [
+    {
+      "id": 1781234339711,
+      "at": "2026-06-12T03:18:59.711Z",
+      "user": "admin@dami.kz",
+      "action": "Тапсырыс жаңартылды #1781233862151: жеткізілді"
+    },
+    {
+      "id": 1781234337039,
+      "at": "2026-06-12T03:18:57.039Z",
+      "user": "admin@dami.kz",
+      "action": "Тапсырыс жаңартылды #1781234263661: жеткізілді"
+    },
+    {
+      "id": 1781234333686,
+      "at": "2026-06-12T03:18:53.686Z",
+      "user": "admin@dami.kz",
+      "action": "Тапсырыс жаңартылды #1781234263661: жеткізілді"
+    },
+    {
+      "id": 1781234331189,
+      "at": "2026-06-12T03:18:51.189Z",
+      "user": "admin@dami.kz",
+      "action": "Тапсырыс жаңартылды #1781234263661: жеткізілді"
+    },
+    {
+      "id": 1781234328055,
+      "at": "2026-06-12T03:18:48.055Z",
+      "user": "admin@dami.kz",
+      "action": "Тапсырыс жаңартылды #1781234263661: курьер алды"
+    },
+    {
+      "id": 1781234324976,
+      "at": "2026-06-12T03:18:44.976Z",
+      "user": "admin@dami.kz",
+      "action": "Тапсырыс жаңартылды #1781233862151: жеткізілді"
+    },
+    {
+      "id": 1781234321839,
+      "at": "2026-06-12T03:18:41.839Z",
+      "user": "admin@dami.kz",
+      "action": "Тапсырыс жаңартылды #1781234263661: дайындалуда"
+    },
+    {
+      "id": 1781234316608,
+      "at": "2026-06-12T03:18:36.608Z",
+      "user": "admin@dami.kz",
+      "action": "Жүйеге кірді"
+    },
+    {
+      "id": 1781234289973,
+      "at": "2026-06-12T03:18:09.973Z",
+      "user": "alua@gmail.com",
+      "action": "Жүйеден шықты"
+    },
+    {
+      "id": 1781234271227,
+      "at": "2026-06-12T03:17:51.227Z",
+      "user": "alua@gmail.com",
+      "action": "Тапсырыс жаңартылды #1781234263661: қабылданды"
+    },
+    {
+      "id": 1781234268373,
+      "at": "2026-06-12T03:17:48.373Z",
+      "user": "alua@gmail.com",
+      "action": "Тапсырыс жаңартылды #1781234263661: қабылданды"
+    },
+    {
+      "id": 1781234263661,
+      "at": "2026-06-12T03:17:43.661Z",
+      "user": "alua@gmail.com",
+      "action": "Тапсырыс Kaspi төлемінен кейін жіберілді #1781234263661"
+    },
+    {
+      "id": 1781234255378,
+      "at": "2026-06-12T03:17:35.378Z",
+      "user": "alua@gmail.com",
+      "action": "Жеткізу мекенжайы қосылды"
+    },
+    {
+      "id": 1781234227501,
+      "at": "2026-06-12T03:17:07.501Z",
+      "user": "alua@gmail.com",
+      "action": "Себетке қосылды: Double Burger"
+    },
+    {
+      "id": 1781234188279,
+      "at": "2026-06-12T03:16:28.279Z",
+      "user": "alua@gmail.com",
+      "action": "Пайдаланушы тіркелді және e-mail/телефон расталды"
+    },
+    {
+      "id": 1781234115960,
+      "at": "2026-06-12T03:15:15.960Z",
+      "user": "owner@dami.kz",
+      "action": "Жүйеден шықты"
+    },
+    {
+      "id": 1781234072539,
+      "at": "2026-06-12T03:14:32.539Z",
+      "user": "owner@dami.kz",
+      "action": "Себетке қосылды: Double Burger"
+    },
+    {
+      "id": 1781234049421,
+      "at": "2026-06-12T03:14:09.421Z",
+      "user": "owner@dami.kz",
+      "action": "Мәзір жаңартылды: Бешбармақ сеті"
+    },
+    {
+      "id": 1781234019947,
+      "at": "2026-06-12T03:13:39.947Z",
+      "user": "owner@dami.kz",
+      "action": "Жүйеге кірді"
+    },
+    {
+      "id": 1781233986364,
+      "at": "2026-06-12T03:13:06.364Z",
+      "user": "courier@dami.kz",
+      "action": "Жүйеден шықты"
+    },
+    {
+      "id": 1781233960252,
+      "at": "2026-06-12T03:12:40.252Z",
+      "user": "courier@dami.kz",
+      "action": "Себетке қосылды: Chicken Pizza"
+    },
+    {
+      "id": 1781233939905,
+      "at": "2026-06-12T03:12:19.905Z",
+      "user": "courier@dami.kz",
+      "action": "Тапсырыс жаңартылды #1781233862151: курьер алды"
+    },
+    {
+      "id": 1781233934621,
+      "at": "2026-06-12T03:12:14.621Z",
+      "user": "courier@dami.kz",
+      "action": "Жүйеге кірді"
+    },
+    {
+      "id": 1781233912455,
+      "at": "2026-06-12T03:11:52.455Z",
+      "user": "admin@dami.kz",
+      "action": "Жүйеден шықты"
+    },
+    {
+      "id": 1781233907926,
+      "at": "2026-06-12T03:11:47.926Z",
+      "user": "admin@dami.kz",
+      "action": "Шағым/ұсыныс қалдырды"
+    },
+    {
+      "id": 1781233877674,
+      "at": "2026-06-12T03:11:17.674Z",
+      "user": "admin@dami.kz",
+      "action": "Тапсырыс жаңартылды #1781233862151: жеткізілді"
+    },
+    {
+      "id": 1781233874303,
+      "at": "2026-06-12T03:11:14.303Z",
+      "user": "admin@dami.kz",
+      "action": "Тапсырыс жаңартылды #1781233862151: жеткізілді"
+    },
+    {
+      "id": 1781233873471,
+      "at": "2026-06-12T03:11:13.471Z",
+      "user": "admin@dami.kz",
+      "action": "Тапсырыс жаңартылды #1781233862151: жеткізілді"
+    },
+    {
+      "id": 1781233872865,
+      "at": "2026-06-12T03:11:12.865Z",
+      "user": "admin@dami.kz",
+      "action": "Тапсырыс жаңартылды #1781233862151: курьер алды"
+    },
+    {
+      "id": 1781233870863,
+      "at": "2026-06-12T03:11:10.863Z",
+      "user": "admin@dami.kz",
+      "action": "Тапсырыс жаңартылды #1781233862151: дайындалуда"
+    },
+    {
+      "id": 1781233862152,
+      "at": "2026-06-12T03:11:02.152Z",
+      "user": "admin@dami.kz",
+      "action": "Тапсырыс Kaspi төлемінен кейін жіберілді #1781233862151"
+    },
+    {
+      "id": 1781233778671,
+      "at": "2026-06-12T03:09:38.671Z",
+      "user": "admin@dami.kz",
+      "action": "Себетке қосылды: Chicken Pizza"
+    },
+    {
+      "id": 1781233730684,
+      "at": "2026-06-12T03:08:50.684Z",
+      "user": "admin@dami.kz",
+      "action": "Жүйеге кірді"
+    },
+    {
+      "id": 1781213121445,
+      "at": "2026-06-11T21:25:21.445Z",
+      "user": "admin@dami.kz",
+      "action": "Жүйеге кірді"
+    }
+  ]
+}

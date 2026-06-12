@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="kk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Кабинет - DamiFood</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="appHeader"></div>
+  <main class="container dashboard">
+    <div class="section-head"><div><h2 id="title">Dashboard</h2><p id="subtitle">Рөліңізге сәйкес басқару панелі.</p></div></div>
+    <div id="stats" class="grid four"></div>
+    <section class="band"><div id="panel" class="grid"></div></section>
+  </main>
+  <div class="toast-wrap"></div>
+  <script src="/app.js"></script>
+  <script>
+    const statusOrder = ["қабылданды", "дайындалуда", "курьер алды", "жеткізілді"];
+    async function patchOrder(id, body) {
+      await Dami.api("/api/orders/" + id, { method: "PATCH", body });
+      location.reload();
+    }
+    async function patchFood(id, body) {
+      await Dami.api("/api/foods/" + id, { method: "PATCH", body });
+      Dami.toast("Мәзір жаңартылды");
+    }
+    (async () => {
+      await Dami.bootstrap();
+      if (!await Dami.requireUser()) return;
+      const data = await Dami.api("/api/dashboard");
+      const role = Dami.state.user.role;
+      title.textContent = role === "admin" ? "Әкімші панелі" : role === "courier" ? "Курьер кабинеті" : role === "owner" ? "Мейрамхана кабинеті" : "Клиент кабинеті";
+
+      if (role === "client") {
+        stats.innerHTML = [`Мекенжайлар|${data.addresses.length}`, `Тапсырыстар|${data.orders.length}`, `Таңдаулылар|${data.favorites.length}`, `Рөл|Клиент`].map(x => { const [a,b]=x.split("|"); return `<div class="card card-pad stat"><span class="muted">${a}</span><strong>${b}</strong></div>`; }).join("");
+        panel.innerHTML = `<div class="card card-pad"><h3>Соңғы тапсырыстар</h3><div class="list">${data.orders.slice(0,5).map(o => `<div class="item row"><span>#${o.id} · ${o.status}</span><b>${Dami.money(o.total)}</b></div>`).join("") || "Тапсырыс жоқ"}</div></div>`;
+      }
+      if (role === "courier") {
+        stats.innerHTML = [`Қолжетімді|${data.orders.filter(o => !o.courierId).length}`, `Менің тапсырысым|${data.orders.filter(o => o.courierId === Dami.state.user.id).length}`, `Белсенді|${data.orders.filter(o => o.status !== "жеткізілді").length}`, `Рөл|Курьер`].map(x => { const [a,b]=x.split("|"); return `<div class="card card-pad stat"><span class="muted">${a}</span><strong>${b}</strong></div>`; }).join("");
+        panel.innerHTML = `<div class="card card-pad"><h3>Белсенді тапсырыстар</h3><div class="list">${data.orders.map(o => `<div class="item"><div class="row"><b>#${o.id}</b><span class="tag">${o.status}</span></div><p>${o.address}<br>${o.phone}<br>${o.note || ""}</p><button ${o.courierId ? "disabled" : ""} onclick='patchOrder(${o.id},{accept:true})'>Қабылдау</button></div>`).join("") || "Тапсырыс жоқ"}</div></div>`;
+      }
+      if (role === "owner") {
+        stats.innerHTML = [`Мейрамхана|${data.restaurants.length}`, `Мәзір|${data.foods.length}`, `Тапсырыстар|${data.orders.length}`, `Рөл|Иесі`].map(x => { const [a,b]=x.split("|"); return `<div class="card card-pad stat"><span class="muted">${a}</span><strong>${b}</strong></div>`; }).join("");
+        panel.innerHTML = `<div class="card card-pad"><h3>Мәзірді басқару</h3><div class="list">${data.foods.map(f => `<div class="item"><div class="row"><b>${f.name}</b><span>${Dami.money(f.price)}</span></div><div class="grid two"><label>Баға<input type="number" value="${f.price}" onchange="patchFood(${f.id},{price:Number(this.value)})"></label><label>Қолжетімділік<select onchange="patchFood(${f.id},{available:this.value==='true'})"><option value="true" ${f.available ? "selected" : ""}>Қолжетімді</option><option value="false" ${!f.available ? "selected" : ""}>Өшіру</option></select></label></div></div>`).join("")}</div></div>`;
+      }
+      if (role === "admin") {
+        stats.innerHTML = [`Пайдаланушылар|${data.users.length}`, `Тапсырыстар|${data.orders.length}`, `Мейрамхана|${data.restaurants.length}`, `Шағым|${data.complaints.length}`].map(x => { const [a,b]=x.split("|"); return `<div class="card card-pad stat"><span class="muted">${a}</span><strong>${b}</strong></div>`; }).join("");
+        panel.innerHTML = `<div class="layout"><section class="card card-pad"><h3>Тапсырыстарды басқару</h3><div class="list">${data.orders.map(o => `<div class="item"><div class="row"><b>#${o.id}</b><span>${o.status}</span></div><p>${o.address}</p><button onclick='patchOrder(${o.id},{status:"${statusOrder[Math.min(statusOrder.indexOf(o.status)+1,3)]}"})'>Келесі статус</button></div>`).join("") || "Тапсырыс жоқ"}</div></section><aside class="card card-pad"><h3>Аудит лог</h3><div class="list">${data.logs.slice(0,20).map(l => `<div class="item"><b>${new Date(l.at).toLocaleString()}</b><br>${l.user}<br>${l.action}</div>`).join("")}</div></aside></div>`;
+      }
+    })();
+  </script>
+</body>
+</html>
